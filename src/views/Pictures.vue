@@ -99,10 +99,10 @@
       :multiple="true"
       :http-request="handleUpload"
       :limit="5"
-      :auto-upload="false"
       accept=".jpg,.png"
       list-type="picture"
     >
+    <div>{{ fileList }}</div>
       <el-button size="small" type="primary">选择照片</el-button>
       <template #tip>
         <div class="el-upload__tip">只能上传 jpg/png 文件，一次最多上传5张</div>
@@ -228,6 +228,10 @@ export default {
       fileList.push(imgUrl)
     }
 
+    watch(dialogVisible, (newValue, oldValue) => {
+      if(newValue === false) fileList.length = 0;
+    })
+
     // 调用后端接口，将图片存入数据库中
     async function handleSubmit() {
       let addPicParams = reactive({
@@ -272,7 +276,6 @@ export default {
     );
 
     onMounted(() => {
-      console.log(route);
       params.catId = route.params.catId;
       reqPicList();
     });

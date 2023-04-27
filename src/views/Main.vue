@@ -1,10 +1,13 @@
 <template>
-  <div class="app">
+  <div class="main">
     <el-container>
-      <el-header>长大猫谱后台管理系统</el-header>
+      <el-header>
+        <div>长大猫谱后台管理系统</div>
+        <el-button>退出登录</el-button>
+      </el-header>
       <el-container>
         <el-aside width="150px">
-          <el-menu>
+          <el-menu default-active="1-1">
             <router-link to="/cats">
               <el-menu-item index="1-1"> 猫咪信息管理 </el-menu-item>
             </router-link>
@@ -13,6 +16,9 @@
             </router-link>
             <router-link to="/tipModule">
               <el-menu-item index="1-3"> 科普知识管理 </el-menu-item>
+            </router-link>
+            <router-link to="/place">
+              <el-menu-item index="1-4"> 猫咪常驻地管理 </el-menu-item>
             </router-link>
           </el-menu>
         </el-aside>
@@ -36,12 +42,12 @@ export default {
 };
 </script>
   
-<style scoped>
+<style lang="scss">
 body {
   margin: 0;
   font-family: "微软雅黑";
 }
-.app {
+.main {
   min-width: 1200px;
   width: 100vw;
   height: 100vh;
@@ -55,6 +61,13 @@ body {
   background-color: #2a6aff;
   color: white;
   line-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .el-button {
+    color: black;
+  }
 }
 .el-aside {
   background-color: white;

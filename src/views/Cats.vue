@@ -33,6 +33,14 @@
       >
       </el-table-column>
       <el-table-column
+        label="常驻地"
+        prop="place"
+        width="auto"
+        min-width="5%"
+        align="center"
+      >
+      </el-table-column>
+      <el-table-column
         label="花色"
         prop="stylor"
         width="auto"
@@ -127,15 +135,11 @@
         </el-form-item>
         <el-form-item label="常驻地点">
           <el-select v-model="formData.place" placeholder="请选择猫咪常驻地">
-            <el-option label="天健" value="天健"></el-option>
-            <el-option label="永康" value="永康"></el-option>
+            <el-option v-for="(place, index) in placeList" :key="index" :label="place.name" :value="place.name"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="花色">
-          <el-select v-model="formData.stylor" placeholder="请选择猫咪花色">
-            <el-option label="狸花" value="狸花"></el-option>
-            <el-option label="橘" value="橘"></el-option>
-          </el-select>
+          <el-input v-model="formData.stylor" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="绝育状态">
           <el-select
@@ -206,6 +210,7 @@
 <script>
 import { ref, reactive, onMounted, watch } from "vue";
 import { getCatList, addCat, deleteCatById, updateCat } from "@/api/cats.js";
+import { getPlaceList } from "@/api/place.js"
 import { ElMessageBox, ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 
@@ -245,6 +250,9 @@ export default {
       personality: "",
       guide: "",
     });
+
+    // 猫咪常驻地列表
+    let placeList = reactive([]);
 
     function showAddDialog() {
       dialogData.title = "添加猫咪信息";
@@ -320,6 +328,11 @@ export default {
       catList.push(...res.list);
     }
 
+    async function reqPlaceList() {
+      let { placeList : list } = await getPlaceList();
+      placeList.push(...list);
+    }
+
     watch([() => params.pageNum, () => params.name], () => {
       reqCatList();
     });
@@ -335,6 +348,7 @@ export default {
 
     onMounted(() => {
       reqCatList();
+      reqPlaceList();
     });
 
     return {
@@ -343,6 +357,7 @@ export default {
       total,
       dialogData,
       formData,
+      placeList,
       showAddDialog,
       showEditDialog,
       handleAdd,
@@ -383,7 +398,6 @@ export default {
     /* 属性规定框的子元素应该被水平或垂直排列 */
     -webkit-box-orient: vertical;
   }
-  
 
   .el-dialog {
     min-width: 735px;

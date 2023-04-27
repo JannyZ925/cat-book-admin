@@ -15,7 +15,8 @@ const request = axios.create({
     baseURL: 'http://localhost:9090',
 
     // 请求超时的时间：5s
-    timeout: 5000
+    timeout: 5000,
+    // withCredentials: true
 })
 
 // 请求拦截器
@@ -23,6 +24,7 @@ request.interceptors.request.use(config => {
     // 进度条开始
     nprogress.start()
     // config：配置对象，有一个重要的属性（header 请求头）
+    // config.headers.isAdmin = true
     return config
 })
 // 响应拦截器

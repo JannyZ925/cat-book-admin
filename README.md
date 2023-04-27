@@ -88,6 +88,8 @@ params 本身的值是已经是 JavaScript 类型的值了，不需要使用 JSO
 
 - 解决方案：给 el-date-picker 加一个属性 ```value-format="YYYY-MM-DD"``` 且属性值一定要全部写成大写
 
+## 添加图片的对话框关闭之后再次打开，依然显示之前选中的照片
+
 
 
 
